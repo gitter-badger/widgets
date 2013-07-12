@@ -20,6 +20,7 @@
 
 use Cartalyst\Extensions\Extension;
 use Cartalyst\Extensions\ExtensionBag;
+use Closure;
 use Illuminate\Container\Container;
 use Illuminate\Events\Dispatcher as EventsDispatcher;
 use Illuminate\Support\NamespacedItemResolver;
@@ -47,6 +48,13 @@ class WidgetResolver {
 	 * @var string
 	 */
 	protected $namespacePrefix = 'Widgets';
+
+	/**
+	 * List of registered items.
+	 *
+	 * @var array
+	 */
+	protected $items = array();
 
 	/**
 	 * Array of parsed keys.
@@ -100,6 +108,18 @@ class WidgetResolver {
 
 		$instance = $this->container->make($class);
 		return call_user_func_array(array($instance, $method), $parameters);
+	}
+
+	/**
+	 * Manually maps an item into the registered array.
+	 *
+	 * @param  string  $key
+	 * @param  mixed   $item
+	 * @return void
+	 */
+	public function map($key, $item)
+	{
+		$this->items[$key] = $item;
 	}
 
 	/**
