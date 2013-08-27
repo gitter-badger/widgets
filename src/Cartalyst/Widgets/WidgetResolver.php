@@ -18,32 +18,30 @@
  * @link       http://cartalyst.com
  */
 
-use Cartalyst\Extensions\Extension;
 use Cartalyst\Extensions\ExtensionBag;
 use Closure;
 use Illuminate\Container\Container;
-use Illuminate\Events\Dispatcher as EventsDispatcher;
-use Illuminate\Support\NamespacedItemResolver;
+use InvalidArgumentException;
+use RuntimeException;
 
 class WidgetResolver {
 
 	/**
 	 * The inversion of control container instance.
 	 *
-	 * @var Illuminate\Container\Container
+	 * @var \Illuminate\Container\Container
 	 */
 	protected $container;
 
 	/**
 	 * The Extension Bag used by the addon.
 	 *
-	 * @var Cartalyst\Extensions\ExtensionBag
+	 * @var \Cartalyst\Extensions\ExtensionBag
 	 */
 	protected $extensionBag;
 
 	/**
-	 * Default namespace prefix for parsing
-	 * keys
+	 * Default namespace prefix for parsing keys.
 	 *
 	 * @var string
 	 */
@@ -66,8 +64,8 @@ class WidgetResolver {
 	/**
 	 * Create a new extension resolver.
 	 *
-	 * @param  Illuminate\Container\Container  $container
-	 * @param  Cartalyst\Extensions\ExtensionBag  $extensionBag
+	 * @param  \Illuminate\Container\Container     $container
+	 * @param  \Cartalyst\Extensions\ExtensionBag  $extensionBag
 	 * @return void
 	 */
 	public function __construct(Container $container, ExtensionBag $extensionBag)
@@ -84,9 +82,8 @@ class WidgetResolver {
 	 */
 	public function make($key, array $parameters = array())
 	{
-		// If we haven't actually got the item, we'll attempt
-		// to auto-detect it based on our Extension Bag and
-		// the key given.
+		// If we haven't actually got the item, we'll attempt to auto-detect
+		// it based on our Extension Bag and the given key.
 		if ( ! isset($this->items[$key]))
 		{
 			$this->autoDetect($key);
@@ -101,12 +98,13 @@ class WidgetResolver {
 
 		if (strpos($item, '@') === false)
 		{
-			throw new \InvalidArgumentException("No @ character was found to separate the class and method to be loaded in [$class].");
+			throw new InvalidArgumentException("No @ character was found to separate the class and method to be loaded in [{$class}].");
 		}
 
 		list($class, $method) = explode('@', $item);
 
 		$instance = $this->container->make($class);
+
 		return call_user_func_array(array($instance, $method), $parameters);
 	}
 
@@ -123,9 +121,8 @@ class WidgetResolver {
 	}
 
 	/**
-	 * If an item has not been registered with
-	 * the resolver, we'll attempt to detect it
-	 * based on the key given and register the
+	 * If the item has not been registered with the resolver, we will
+	 * attempt to detect it based on the given key and register the
 	 * item with this object.
 	 *
 	 * @param  string  $key
@@ -134,16 +131,16 @@ class WidgetResolver {
 	public function autoDetect($key)
 	{
 		list($class, $method) = $this->parseKey($key);
-		$this->items[$key]    = "{$class}@{$method}";
+
+		$this->items[$key] = "{$class}@{$method}";
 	}
 
 	/**
-	 * Parses an extension resolvable key and
-	 * returns the corresponding class and
-	 * method in an array. A second parameter
-	 * can be provided to denote a namespace prefix
-	 * (within the extension's namespace) for the
-	 * class name
+	 * Parses an extension resolvable key and returns the corresponding class
+	 * and method in an array.
+	 *
+	 * A second parameter can be provided to denote a namespace prefix
+	 * (within the extension's namespace) for the class name.
 	 *
 	 * @param  string  $key
 	 * @param  string  $namespacePrefix
@@ -153,73 +150,68 @@ class WidgetResolver {
 	public function parseKey($key, $namespacePrefix = null)
 	{
 		// Default the namespace prefix
-		if ( ! isset($namespacePrefix))
-		{
-			$namespacePrefix = $this->namespacePrefix;
-		}
+		$namespacePrefix = $namespacePrefix ?: $this->namespacePrefix;
 
 		// Generate a cache key based on the key and prefix
 		$cacheKey = $key;
-		if (isset($namespacePrefix))
+		if ( ! is_null($namespacePrefix))
 		{
 			$cacheKey .= $namespacePrefix;
 		}
 
-		// If we have already parsed this key let's
-		// Just return the class and save on the
-		// overhead
-		if (isset($this->parsed[$cacheKey]))
+		// If we have already parsed this key let's just return
+		// the class and save on the overhead.
+		if ( ! empty($this->parsed[$cacheKey]))
 		{
 			return $this->parsed[$cacheKey];
 		}
 
 		if ( ! str_contains($key, '::'))
 		{
-			throw new \InvalidArgumentException("An extension must be provided in the format vendor/extension::class.method for key [$key].");
+			throw new InvalidArgumentException("An extension must be provided in the format vendor/extension::class.method for key [{$key}].");
 		}
 
 		list($extensionSlug, $classKey) = explode('::', $key);
 
-		// We need at least a class and method,
-		// so a minimum of 1 dot to separate the
-		// class from method
-		if (substr_count($classKey, '.') < 1)
+		// Check if the extension exists
+		if (empty($this->extensionBag[$extensionSlug]))
 		{
-			throw new \InvalidArgumentException("At least two segments are required in [$classKey] for key [$key], one for class name and one for method name.");
+			throw new InvalidArgumentException("Extension [{$extensionSlug}] was not found on the Extension Bag.");
 		}
 
-		if ( ! isset($this->extensionBag[$extensionSlug]))
-		{
-			throw new \InvalidArgumentException("Extension [$extensionSlug] is not existent on Extension Bag, cannot resolve.");
-		}
-
+		// Get the extension information
 		$extension = $this->extensionBag[$extensionSlug];
 
+		// Check if the extension is enabled
 		if ( ! $extension->isEnabled())
 		{
-			throw new \RuntimeException("Extension [{$extension->getSlug()}] is not enabled therefore cannot resolve.");
+			throw new RuntimeException("Extension [{$extension->getSlug()}] is not enabled.");
 		}
 
-		// Calculate the class and method
-		$lastDot = strrpos($classKey, '.');
+		// Check if we have a method name
+		if (substr_count($classKey, '.') < 1)
+		{
+			$class  = $classKey;
+			$method = 'index';
+		}
+		else
+		{
+			list($class, $method) = explode('.', $classKey);
+		}
 
-		// The class is the namespace of the extension plus
-		// the dot-notation converted to a namespace structure.
-		// foo.bar.baz will become Foo\Bar\Baz
-		$class = $extension->getNamespace().'\\';
+		// The class is the namespace of the extension plus the
+		// dot-notation converted to a namespace structure.
+		$className = $extension->getNamespace().'\\';
 
 		// Add in the namespace prefix if one is specified
 		if (isset($namespacePrefix))
 		{
-			$class .= $namespacePrefix.'\\';
+			$className .= $namespacePrefix.'\\';
 		}
-		$class .= str_replace(' ', '\\', ucwords(str_replace('.', ' ', substr($classKey, 0, $lastDot))));
-
-		// And the method is just everything after the dot
-		$method = substr($classKey, $lastDot + 1);
+		$className .= str_replace(' ', '\\', ucwords($class));
 
 		// Cache our parsed key and return it
-		return $this->parsed[$cacheKey] = array($class, $method);
+		return $this->parsed[$cacheKey] = array($className, $method);
 	}
 
 	/**
