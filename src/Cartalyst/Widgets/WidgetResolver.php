@@ -192,7 +192,7 @@ class WidgetResolver {
 		if (substr_count($classKey, '.') < 1)
 		{
 			$class  = $classKey;
-			$method = 'index';
+			$method = 'show';
 		}
 		else
 		{
