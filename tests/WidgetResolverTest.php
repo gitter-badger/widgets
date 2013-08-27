@@ -50,19 +50,6 @@ class WidgetResolverTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * @expectedException InvalidArgumentException
 	 */
-	public function testParsingKeyThrowsExceptionIfNotEnoughSegmentsExist()
-	{
-		$resolver = new WidgetResolver(
-			$container    = new Container,
-			$extensionBag = m::mock('Cartalyst\Extensions\ExtensionBag')
-		);
-
-		$resolver->parseKey('foo/bar::qux');
-	}
-
-	/**
-	 * @expectedException InvalidArgumentException
-	 */
 	public function testParsingKeyThrowsExceptionIfExtensionDoesNotExist()
 	{
 		$resolver = new WidgetResolver(
@@ -86,7 +73,7 @@ class WidgetResolverTest extends PHPUnit_Framework_TestCase {
 		);
 
 		$extensionBag->shouldReceive('offsetExists')->with('foo/bar')->andReturn(true);
-		$extensionBag->shouldReceive('offsetGet')->with('foo/bar')->once()->andReturn($extension1 = m::mock('Cartalyst\Extensions\ExtensionInterface'));
+		$extensionBag->shouldReceive('offsetGet')->with('foo/bar')->andReturn($extension1 = m::mock('Cartalyst\Extensions\ExtensionInterface'));
 		$extension1->shouldReceive('isEnabled')->andReturn(false);
 
 		// Only used for exception
@@ -103,15 +90,15 @@ class WidgetResolverTest extends PHPUnit_Framework_TestCase {
 		);
 
 		$extensionBag->shouldReceive('offsetExists')->with('foo/bar')->andReturn(true);
-		$extensionBag->shouldReceive('offsetGet')->with('foo/bar')->once()->andReturn($extension1 = m::mock('Cartalyst\Extensions\ExtensionInterface'));
+		$extensionBag->shouldReceive('offsetGet')->with('foo/bar')->andReturn($extension1 = m::mock('Cartalyst\Extensions\ExtensionInterface'));
 		$extension1->shouldReceive('getNamespace')->once()->andReturn('Foo\Bar');
 		$extension1->shouldReceive('isEnabled')->once()->andReturn(true);
 
 		// Double check we did get an array with two indexes
-		$this->assertCount(2, $actual = $resolver->parseKey('foo/bar::baz.bat.qux'));
+		$this->assertCount(2, $actual = $resolver->parseKey('foo/bar::baz.bat'));
 
 		// Order matters so we'll inspect each individually
-		$expected = array('Foo\Bar\Baz\Bat', 'qux');
+		$expected = array('Foo\Bar\Widgets\Baz', 'bat');
 		$this->assertEquals($expected[0], $actual[0]);
 		$this->assertEquals($expected[1], $actual[1]);
 	}
@@ -124,15 +111,15 @@ class WidgetResolverTest extends PHPUnit_Framework_TestCase {
 		);
 
 		$extensionBag->shouldReceive('offsetExists')->with('foo/bar')->andReturn(true);
-		$extensionBag->shouldReceive('offsetGet')->with('foo/bar')->once()->andReturn($extension1 = m::mock('Cartalyst\Extensions\ExtensionInterface'));
+		$extensionBag->shouldReceive('offsetGet')->with('foo/bar')->andReturn($extension1 = m::mock('Cartalyst\Extensions\ExtensionInterface'));
 		$extension1->shouldReceive('getNamespace')->once()->andReturn('Foo\Bar');
 		$extension1->shouldReceive('isEnabled')->once()->andReturn(true);
 
 		// Double check we did get an array with two indexes
-		$this->assertCount(2, $actual = $resolver->parseKey('foo/bar::baz.bat.qux', 'Corge'));
+		$this->assertCount(2, $actual = $resolver->parseKey('foo/bar::baz.bat', 'Corge'));
 
 		// Order matters so we'll inspect each individually
-		$expected = array('Foo\Bar\Corge\Baz\Bat', 'qux');
+		$expected = array('Foo\Bar\Corge\Baz', 'bat');
 		$this->assertEquals($expected[0], $actual[0]);
 		$this->assertEquals($expected[1], $actual[1]);
 	}
