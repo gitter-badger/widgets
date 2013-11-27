@@ -1,4 +1,4 @@
-{
+	{
 	"name": "cartalyst/widgets",
 	"description": "Widget registering with automatic resolving and integration with Cartalyst Extensions.",
 	"keywords": ["platform", "ecommerce", "laravel", "bootstrap"],
@@ -32,9 +32,8 @@
 	],
 	"require": {
 		"php": ">=5.3.0",
-
-		"illuminate/container": "4.0.*",
-		"cartalyst/extensions": "1.0.*"
+		"cartalyst/extensions": "1.0.*",
+		"illuminate/container": "~4"
 	},
 	"require-dev": {
 		"mockery/mockery": "0.7.2"
