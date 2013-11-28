@@ -35,7 +35,7 @@ class WidgetsServiceProvider extends ServiceProvider {
 		{
 			$matcher = $blade->createMatcher('widget');
 
-			return preg_replace($matcher, '<?php echo app(\'widgets\')->make$2; ?>', $value);
+			return preg_replace($matcher, '<?php try { echo app(\'widgets\')->make$2; } catch (\Exception $e) { } ?>', $value);
 		});
 	}
 
