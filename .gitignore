@@ -1,4 +1,14 @@
-vendor
-composer.phar
+/bootstrap/compiled.php
+/vendor
+/node_modules
 composer.lock
+composer.phar
+.env
 .DS_Store
+Thumbs.db
+error_log
+/.settings
+/.buildpath
+/.project
+/_ide_helper.php
+/.idea

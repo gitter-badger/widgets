@@ -7,7 +7,7 @@
         "laravel",
         "widgets"
     ],
-    "license": "BSD-3-Clause",
+    "license": "MIT",
     "authors": [
         {
             "name": "Rinvex LLC",
@@ -17,12 +17,6 @@
             "name": "Abdelrahman Omran",
             "email": "me@omranic.com",
             "role": "Project Lead"
-        }
-    ],
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "http://packages.rinvex.com"
         }
     ],
     "require": {
@@ -39,10 +33,8 @@
         }
     },
     "extra": {
-        "component": "package",
-        "branch-alias": {
-            "dev-master": "1.0-dev"
-        }
+        "component":"package"
     },
-    "minimum-stability": "dev"
+        "minimum-stability": "stable",
+        "prefer-stable": true
 }
