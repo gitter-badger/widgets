@@ -17,14 +17,13 @@
 
 namespace Rinvex\Widgets\Providers;
 
+use Rinvex\Widgets\WidgetResolver;
 use Illuminate\Support\ServiceProvider;
 
 class WidgetServiceProvider extends ServiceProvider
 {
     /**
-     * Bootstrap the application events.
-     *
-     * @return void
+     * {@inheritDoc}
      */
     public function boot()
     {
@@ -38,9 +37,7 @@ class WidgetServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the service provider.
-     *
-     * @return void
+     * {@inheritDoc}
      */
     public function register()
     {

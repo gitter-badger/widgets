@@ -17,11 +17,11 @@
 
 namespace Rinvex\Widgets;
 
-use Rinvex\Extensions\ExtensionBag;
 use Closure;
-use Illuminate\Container\Container;
-use InvalidArgumentException;
 use RuntimeException;
+use InvalidArgumentException;
+use Illuminate\Container\Container;
+use Rinvex\Extensions\ExtensionBag;
 
 class WidgetResolver
 {
@@ -33,7 +33,7 @@ class WidgetResolver
     protected $container;
 
     /**
-     * The Extension Bag used by the addon.
+     * The Extension Bag used by the add-on.
      *
      * @var \Rinvex\Extensions\ExtensionBag
      */
@@ -79,6 +79,9 @@ class WidgetResolver
      *
      * @param  string $key
      * @param  array  $parameters
+     *
+     * @return mixed
+     * @throws \InvalidArgumentException
      */
     public function make($key, array $parameters = [])
     {
@@ -148,7 +151,8 @@ class WidgetResolver
      * @param  string $namespacePrefix
      *
      * @return array
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
+     * @throws \RuntimeException
      */
     public function parseKey($key, $namespacePrefix = null)
     {
