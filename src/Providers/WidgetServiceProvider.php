@@ -15,11 +15,11 @@
  * @link           http://rinvex.com
  */
 
-namespace Rinvex\Widgets;
+namespace Rinvex\Widgets\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-class WidgetsServiceProvider extends ServiceProvider {
+class WidgetServiceProvider extends ServiceProvider {
 
 	/**
 	 * Bootstrap the application events.

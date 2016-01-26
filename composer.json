@@ -34,8 +34,8 @@
 		"mockery/mockery": "0.7.2"
 	},
 	"autoload": {
-		"psr-0": {
-			"Rinvex\\Widgets": "src"
+		"psr-4": {
+			"Rinvex\\Widgets\\": "src/"
 		}
 	},
 	"extra": {
