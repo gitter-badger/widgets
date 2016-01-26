@@ -1,24 +1,23 @@
-<?php namespace Cartalyst\Widgets;
+<?php
+
 /**
- * Part of the Platform application.
+ * Part of the Rinvex Widgets Package.
  *
  * NOTICE OF LICENSE
  *
- * Licensed under the 3-clause BSD License.
+ * Licensed under The MIT License (MIT).
  *
- * This source file is subject to the 3-clause BSD License that is
- * bundled with this package in the LICENSE file.  It is also available at
- * the following URL: http://www.opensource.org/licenses/BSD-3-Clause
+ * This source file is subject to The MIT License (MIT) that is
+ * bundled with this package in the LICENSE file.
  *
- * @package    Platform
- * @version    2.0.0
- * @author     Cartalyst LLC
- * @license    BSD License (3-clause)
- * @copyright  (c) 2011 - 2013, Cartalyst LLC
- * @link       http://cartalyst.com
+ * @package        Rinvex Widgets Package
+ * @license        The MIT License (MIT)
+ * @link           http://rinvex.com
  */
 
-use Cartalyst\Extensions\ExtensionBag;
+namespace Rinvex\Widgets;
+
+use Rinvex\Extensions\ExtensionBag;
 use Closure;
 use Illuminate\Container\Container;
 use InvalidArgumentException;
@@ -36,7 +35,7 @@ class WidgetResolver {
 	/**
 	 * The Extension Bag used by the addon.
 	 *
-	 * @var \Cartalyst\Extensions\ExtensionBag
+	 * @var \Rinvex\Extensions\ExtensionBag
 	 */
 	protected $extensionBag;
 
@@ -65,7 +64,7 @@ class WidgetResolver {
 	 * Create a new extension resolver.
 	 *
 	 * @param  \Illuminate\Container\Container     $container
-	 * @param  \Cartalyst\Extensions\ExtensionBag  $extensionBag
+	 * @param  \Rinvex\Extensions\ExtensionBag  $extensionBag
 	 * @return void
 	 */
 	public function __construct(Container $container, ExtensionBag $extensionBag)
