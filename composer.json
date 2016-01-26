@@ -1,6 +1,6 @@
 {
     "name": "rinvex/widgets",
-    "description": "Widget registering with automatic resolving and integration with Cluster Extensions.",
+    "description": "Widget registering with automatic resolving and integration with Rinvex Extensions.",
     "keywords": [
         "rinvex",
         "cluster",
