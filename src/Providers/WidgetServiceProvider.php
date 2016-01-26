@@ -29,10 +29,12 @@ class WidgetServiceProvider extends ServiceProvider
     {
         $blade = $this->app['view']->getEngineResolver()->resolve('blade')->getCompiler();
 
-        $blade->extend(function ($value) use ($blade) {
-            $matcher = $blade->createMatcher('widget');
+        $blade->extend(function ($value) {
+            $pattern = '/(?<!\w)(\s*)@widget(\s*\(.*\))/';
 
-            return preg_replace($matcher, '<?php try { echo app(\'widgets\')->make$2; } catch (\Exception $e) { } ?>', $value);
+            $replace = '<?php echo app(\'widgets\')->make$2; ?>';
+
+            return preg_replace($pattern, $replace, $value);
         });
     }
 
