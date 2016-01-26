@@ -19,36 +19,33 @@ namespace Rinvex\Widgets\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-class WidgetServiceProvider extends ServiceProvider {
+class WidgetServiceProvider extends ServiceProvider
+{
+    /**
+     * Bootstrap the application events.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        $blade = $this->app['view']->getEngineResolver()->resolve('blade')->getCompiler();
 
-	/**
-	 * Bootstrap the application events.
-	 *
-	 * @return void
-	 */
-	public function boot()
-	{
-		$blade = $this->app['view']->getEngineResolver()->resolve('blade')->getCompiler();
+        $blade->extend(function ($value) use ($blade) {
+            $matcher = $blade->createMatcher('widget');
 
-		$blade->extend(function($value) use ($blade)
-		{
-			$matcher = $blade->createMatcher('widget');
+            return preg_replace($matcher, '<?php try { echo app(\'widgets\')->make$2; } catch (\Exception $e) { } ?>', $value);
+        });
+    }
 
-			return preg_replace($matcher, '<?php try { echo app(\'widgets\')->make$2; } catch (\Exception $e) { } ?>', $value);
-		});
-	}
-
-	/**
-	 * Register the service provider.
-	 *
-	 * @return void
-	 */
-	public function register()
-	{
-		$this->app['widgets'] = $this->app->share(function($app)
-		{
-			return new WidgetResolver($app, $app['extensions']);
-		});
-	}
-
+    /**
+     * Register the service provider.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->app['widgets'] = $this->app->share(function ($app) {
+            return new WidgetResolver($app, $app['extensions']);
+        });
+    }
 }
