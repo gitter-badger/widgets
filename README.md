@@ -24,7 +24,7 @@ Bug reports, feature requests, and pull requests can be submitted by following o
 
 ## Important Credits Notice
 
-This work was derived, based, and/or forked from the latest **BSD** release of [Cartalyst](https://github.com/cartalyst) (R) packages.
+This work was inspired by and/or forked from the latest **BSD** release of [Cartalyst](https://github.com/cartalyst) (R) packages.
 Original credits go to the Cartalyst team with much love and appreciation. [Public Notice](http://omranic.com/clarification-on-rinvex-fork-of-cartalyst-packages/)
 
 ## License
