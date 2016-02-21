@@ -19,7 +19,7 @@ And constructed with the following guidelines:
 
 ## Support Policy
 
-* As of 1.1 releases, long term support will be provided for all Rinvex packages, and will receive bug and security fixes for 1 year. This support and maintenance window is the largest ever provided for Rinvex packages and provides stability and peace of mind for larger, enterprise clients and customers.
+* As of 2.0 releases, long term support will be provided for all Rinvex packages, and will receive bug and security fixes for 1 year. This support and maintenance window is the largest ever provided for Rinvex packages and provides stability and peace of mind for larger, enterprise clients and customers.
 * For general releases, bug and security fixes are provided for 3 months.
 
 ## Coding Standards
