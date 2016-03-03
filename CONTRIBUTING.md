@@ -19,12 +19,12 @@ And constructed with the following guidelines:
 
 ## Support Policy
 
-* As of 1.1 releases, long term support will be provided for all Rinvex packages, and will receive bug and security fixes for 1 year. This support and maintenance window is the largest ever provided for Rinvex packages and provides stability and peace of mind for larger, enterprise clients and customers.
+* As of 2.0 releases, long term support will be provided for all Rinvex packages, and will receive bug and security fixes for 1 year. This support and maintenance window is the largest ever provided for Rinvex packages and provides stability and peace of mind for larger, enterprise clients and customers.
 * For general releases, bug and security fixes are provided for 3 months.
 
 ## Coding Standards
 
-This Rinvex package is compliant with the [PSR-1](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md), [PSR-2](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md) and [PSR-4](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader.md). If you notice any compliance oversights, please send a patch via pull request.
+This Rinvex package follows the FIG standards compliant with the [PSR-1](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md), [PSR-2](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md) and [PSR-4](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader.md) to ensure a high level of interoperability between shared PHP code. If you notice any compliance oversights, please send a patch via pull request.
 
 ## Pull Requests
 

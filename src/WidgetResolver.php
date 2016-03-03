@@ -85,7 +85,7 @@ class WidgetResolver
      */
     public function make($key, array $parameters = [])
     {
-        // If we haven't actually got the item, we'll attempt to auto-detect
+        // If we haven't actually got the item, we will attempt to auto-detect
         // it based on our Extension Bag and the given key.
         if (! isset($this->items[$key])) {
             $this->autoDetect($key);
@@ -165,7 +165,7 @@ class WidgetResolver
             $cacheKey .= $namespacePrefix;
         }
 
-        // If we have already parsed this key let's just return
+        // If we have already parsed this key lets just return
         // the class and save on the overhead.
         if (! empty($this->parsed[$cacheKey])) {
             return $this->parsed[$cacheKey];
