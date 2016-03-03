@@ -8,6 +8,12 @@ We do not give estimated times for completion on `Accepted` Proposals.
 
 ---
 
+### v1.0.1 - 2016-03-03
+
+- Enforce consistency
+- Update package depenencies
+
+
 ### v1.0.0 - 2016-01-26
 
 - Fork package under new namespace
