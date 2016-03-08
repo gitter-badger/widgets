@@ -8,6 +8,11 @@ We do not give estimated times for completion on `Accepted` Proposals.
 
 ---
 
+### v1.0.2 - 2016-03-08
+
+- Enforce consistent IOC vendor namespace
+
+
 ### v1.0.1 - 2016-03-03
 
 - Enforce consistency

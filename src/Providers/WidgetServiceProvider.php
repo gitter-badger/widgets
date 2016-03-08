@@ -43,8 +43,8 @@ class WidgetServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app['widgets'] = $this->app->share(function ($app) {
-            return new WidgetResolver($app, $app['extensions']);
+        $this->app['rinvex.widgets'] = $this->app->share(function ($app) {
+            return new WidgetResolver($app, $app['rinvex.extensions']);
         });
     }
 }
