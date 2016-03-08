@@ -26,6 +26,6 @@ class Widget extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'widgets';
+        return 'rinvex.widgets';
     }
 }
