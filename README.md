@@ -1,5 +1,7 @@
 # Rinvex Widgets
 
+[![Join the chat at https://gitter.im/rinvex/widgets](https://badges.gitter.im/rinvex/widgets.svg)](https://gitter.im/rinvex/widgets?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Widget registering with automatic resolving and integration with Cluster Extensions.
 
 ## Changelog
